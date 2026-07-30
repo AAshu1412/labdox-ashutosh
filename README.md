@@ -4,6 +4,47 @@ A full-stack waitlist management application featuring separate user and admin w
 
 ---
 
+> **⚠️ IMPORTANT NOTICE ON PHONE OTP SMS DELIVERY (TWILIO VS. MOCKED SHOWCASE DELIVERY):**
+> 
+> **We initially implemented full Twilio SMS Gateway integration in the backend (`verification-controller.js`). However, Twilio trial/free-tier accounts strictly require manually pre-whitelisting destination phone numbers in the Twilio Console before SMS messages can be delivered.**
+> 
+> **To ensure a smooth evaluation experience without requiring evaluators to manually whitelist their personal phone numbers or deal with expired SMS credits, we configured the project for Mocked Delivery with On-Screen Display. The full code for both Twilio SMS Gateway and Mocked Delivery is retained in the codebase for complete transparency.**
+
+---
+
+### 📱 Detailed SMS Delivery Flow Comparison
+
+#### 1. Twilio SMS Gateway Flow (Production Code - Retained in `verification-controller.js`)
+- **Request**: User requests a 5-digit phone OTP via the `/api/verify/sendphoneotp` endpoint.
+- **Generation & Storage**: The backend generates a random 5-digit number, hashes it using `bcrypt` (salt rounds: 10), and persists it to the MongoDB `PhoneOTPVerification` collection with a 5-minute TTL and 60-second resend cooldown.
+- **Gateway Dispatch**: The controller instantiates the Twilio REST SDK (`client.messages.create`) using `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, and `TWILIO_PHONE_NUMBER`.
+- **Delivery**: Twilio dispatches a real SMS message (`Labdox / Your OTP for phone verification is: XXXXX`) to the user's mobile device.
+- **Verification**: The user enters the received 5-digit OTP on the `/verify` frontend screen. The backend compares the candidate string against the stored bcrypt hash and marks `isPhoneVerified: true` upon success.
+
+```javascript
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+
+const sendSms = (phone, message) => {
+  const client = require('twilio')(accountSid, authToken);
+  client.messages
+    .create({
+       body: message,
+       from: process.env.TWILIO_PHONE_NUMBER,
+       to: phone
+     })
+    .then(message => console.log(message.sid));
+}
+```
+
+
+#### 2. Mocked Delivery with On-Screen Display Flow (Active Evaluation Mode)
+- **Request & Validation**: Follows identical security, rate-limiting, Zod schema validation, and MongoDB bcrypt storage logic as the Twilio flow.
+- **Console & Response Delivery**: Instead of invoking the external Twilio API (which would fail on un-whitelisted evaluator phone numbers), the backend logs the generated OTP to the server console (`[MOCK SMS OTP] Phone: +91... | OTP: 12345`) and returns `mockOtp` in the API JSON response.
+- **On-Screen Display**: The React frontend (`Verify.jsx`) displays a **"Test Delivery OTP Banner"** directly below the Send button with an interactive **"Fill OTP"** button so evaluators can seamlessly complete and test the phone verification workflow in seconds.
+
+---
+
 ## 🛠️ Technology Stack
 
 - **Frontend**: React (Vite), Zustand (State Management), Tailwind CSS, React Router DOM, React Toastify, Native Fetch API.
@@ -18,11 +59,11 @@ A full-stack waitlist management application featuring separate user and admin w
 - **Registration**: Collects Full Name, Email, Indian Mobile Number (`+91` or 10 digits starting 6-9), Interest Reason, Use Case, and Password.
 - **Email/Password Authentication**: Secure login issuing 1-day JWT tokens.
 - **Google OAuth 2.0**: Unified user creation with pre-filled Google account data. Google registration completion step for phone & interest details.
-- **Unified System**: Records `authProvider` (`email` or `google`) in the database.
+- **Unified System**: Records `authProvider` (`email` or `"google"`) in the database.
 
 ### 2. Real Email & Phone Verification
 - **Email Verification**: Generates a 5-digit OTP sent via Nodemailer SMTP to the user's registered email address.
-- **Phone Verification**: Generates a 5-digit OTP stored as bcrypt hash in DB with 5-minute expiry and 60-second resend cooldown. Includes on-screen test delivery mode for easy evaluator testing without SMS gateways.
+- **Phone Verification**: Generates a 5-digit OTP stored as bcrypt hash in DB with 5-minute expiry and 60-second resend cooldown. Includes on-screen test delivery mode for easy evaluator testing.
 - **Backend Security**: OTP verification checks that the identifier matches the authenticated user in the JWT session. Frontend cannot mark users verified directly.
 
 ### 3. Validation & Duplicate Prevention
@@ -32,7 +73,7 @@ A full-stack waitlist management application featuring separate user and admin w
 
 ### 4. Admin Authentication & RBAC
 - **Google OAuth Only**: Admin access is strictly limited to Google OAuth. Email/password authentication can never grant admin access.
-- **Strict Email Access**: Restricted to designated admin email address. Non-authorized Google accounts are denied access.
+- **Strict Email Access**: Restricted to designated admin email address (`career@labdox.com`). Non-authorized Google accounts are denied access.
 - **Role-Based Access Control**: Backend `adminMiddleware` verifies `req.user.role === "admin"` before serving any admin API route.
 
 ### 5. Admin Dashboard
@@ -52,16 +93,16 @@ A full-stack waitlist management application featuring separate user and admin w
 
 ```bash
 # Clone the repository
-git clone <repository-url>
-cd labdox
+git clone git@github.com:AAshu1412/labdox-ashutosh.git
+cd labdox-ashutosh
 
 # Install Server Dependencies
 cd server
-npm install
+pnpm install
 
 # Install Client Dependencies
 cd ../client
-npm install
+pnpm install
 ```
 
 ### 2. Environment Configuration
@@ -87,6 +128,11 @@ GOOGLE_CLIENT_ID=your_google_client_id
 GOOGLE_CLIENT_SECRET=your_google_client_secret
 GOOGLE_REDIRECT_URI=http://localhost:5000/api/oauth/google/callback
 GOOGLE_ADMIN_REDIRECT_URI=http://localhost:5000/api/oauth/google/admin/callback
+
+# Twilio settings 
+TWILIO_ACCOUNT_SID = your_twilio_account_sid
+TWILIO_AUTH_TOKEN = your_twilio_auth_token
+TWILIO_PHONE_NUMBER = your_twilio_phone_number
 ```
 
 #### `client/.env`
