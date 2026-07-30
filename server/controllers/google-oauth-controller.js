@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const { User, GoogleConnection } = require("../models/user-model");
 
-const ADMIN_EMAIL = "career@labdox.com";
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "career@labdox.com";
 
 const fetchWithRetry = async (url, options = {}, retries = 5, timeoutMs = 15000) => {
   for (let attempt = 1; attempt <= retries; attempt++) {

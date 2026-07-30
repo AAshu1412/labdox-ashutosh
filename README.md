@@ -4,6 +4,11 @@ A full-stack waitlist management application featuring separate user and admin w
 
 ---
 
+### 🌐 Live Application Deployment
+- **Frontend Live URL**: `https://labdox-ashutosh-mvvv.vercel.app/`
+
+---
+
 > **⚠️ IMPORTANT NOTICE ON PHONE OTP SMS DELIVERY (TWILIO VS. MOCKED SHOWCASE DELIVERY):**
 > 
 > **We initially implemented full Twilio SMS Gateway integration in the backend (`verification-controller.js`). However, Twilio trial/free-tier accounts strictly require manually pre-whitelisting destination phone numbers in the Twilio Console before SMS messages can be delivered.**
@@ -73,7 +78,7 @@ const sendSms = (phone, message) => {
 
 ### 4. Admin Authentication & RBAC
 - **Google OAuth Only**: Admin access is strictly limited to Google OAuth. Email/password authentication can never grant admin access.
-- **Strict Email Access**: Restricted to designated admin email address (`career@labdox.com`). Non-authorized Google accounts are denied access.
+- **Strict Email Access**: Restricted to designated admin email address configured via `ADMIN_EMAIL` environment variable (defaults to `career@labdox.com`). Non-authorized Google accounts are denied access.
 - **Role-Based Access Control**: Backend `adminMiddleware` verifies `req.user.role === "admin"` before serving any admin API route.
 
 ### 5. Admin Dashboard
@@ -125,6 +130,9 @@ SMTP_PORT=587
 SMTP_EMAIL=your_email@gmail.com
 SMTP_PASSWORD=your_app_password
 FROM_EMAIL=your_email@gmail.com
+
+# Admin Configuration
+ADMIN_EMAIL=career@labdox.com
 
 # Google OAuth Settings
 GOOGLE_CLIENT_ID=your_google_client_id
@@ -184,7 +192,9 @@ Open [http://localhost:5173](http://localhost:5173) in your browser.
 
 ---
 
-## 🌐 Deployment Instructions (Vercel)
+## 🌐 Deployment & Live Application URL
+
+- **Live Application URL**: `https://labdox-ashutosh-mvvv.vercel.app/`
 
 ### Client Deployment
 1. Import `client/` directory into Vercel.
