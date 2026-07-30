@@ -62,8 +62,8 @@ const sendSms = (phone, message) => {
 - **Unified System**: Records `authProvider` (`email` or `"google"`) in the database.
 
 ### 2. Real Email & Phone Verification
-- **Email Verification**: Generates a 5-digit OTP sent via Nodemailer SMTP to the user's registered email address.
-- **Phone Verification**: Generates a 5-digit OTP stored as bcrypt hash in DB with 5-minute expiry and 60-second resend cooldown. Includes on-screen test delivery mode for easy evaluator testing.
+- **Email Verification**: Generates a 5-digit OTP, bcrypt-hashes it in the database with a 5-minute TTL auto-expiry index and 60-second resend cooldown, and dispatches the raw OTP via Nodemailer SMTP to the user's registered email address.
+- **Phone Verification**: Generates a 5-digit OTP, bcrypt-hashes it in the database with a 5-minute TTL auto-expiry index and 60-second resend cooldown. Includes on-screen test delivery mode (and Twilio code) for easy evaluator testing.
 - **Backend Security**: OTP verification checks that the identifier matches the authenticated user in the JWT session. Frontend cannot mark users verified directly.
 
 ### 3. Validation & Duplicate Prevention

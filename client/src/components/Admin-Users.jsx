@@ -61,9 +61,7 @@ export default function AdminUsers() {
           </p>
         </div>
 
-        {/* Filter Controls */}
         <div className="flex flex-wrap items-center gap-3">
-          {/* Search Box */}
           <input
             type="text"
             placeholder="Search name, email, phone..."
@@ -72,7 +70,6 @@ export default function AdminUsers() {
             className="px-3 py-1.5 border border-gray-300 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-orange-500 w-48"
           />
 
-          {/* Email Verified Filter */}
           <select
             value={filters.emailVerified}
             onChange={(e) => setFilter("emailVerified", e.target.value)}
@@ -83,7 +80,6 @@ export default function AdminUsers() {
             <option value="false">Email Unverified</option>
           </select>
 
-          {/* Phone Verified Filter */}
           <select
             value={filters.phoneVerified}
             onChange={(e) => setFilter("phoneVerified", e.target.value)}
@@ -94,7 +90,6 @@ export default function AdminUsers() {
             <option value="false">Phone Unverified</option>
           </select>
 
-          {/* Approval Status Filter */}
           <select
             value={filters.approvalStatus}
             onChange={(e) => setFilter("approvalStatus", e.target.value)}
@@ -108,7 +103,6 @@ export default function AdminUsers() {
         </div>
       </div>
 
-      {/* Users Table */}
       <div className="overflow-x-auto border border-gray-200 rounded-xl">
         <table className="w-full text-left border-collapse text-sm">
           <thead>
