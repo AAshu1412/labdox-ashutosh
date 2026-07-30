@@ -1,0 +1,41 @@
+# ----------------------------------------------------------------------
+# ROOT & GLOBAL IGNORES
+# ----------------------------------------------------------------------
+
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# API Keys, Secrets, and Credentials
+.env
+.env.*
+.env.local
+*.pem
+# Explicitly ignoring the Firebase service account credential found in your tree:
+labdox-ashu-firebase-adminsdk-fbsvc-*.json
+
+# Build / Output folders
+dist/
+build/
+out/
+
+# Operating System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Generated or Unnecessary Files
+tre.txt
+rnd.js
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Git (Git ignores its own folder automatically, but added per assignment rules)
+.git/
