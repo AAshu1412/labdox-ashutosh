@@ -18,7 +18,6 @@ export default function Home() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-10 space-y-10">
-      {/* Hero Section */}
       <section className="bg-orange-50 border border-orange-200 rounded-2xl p-8 flex flex-col md:flex-row items-center justify-between gap-8 shadow-sm">
         <div className="space-y-4 md:w-1/2">
           <span className="bg-orange-600 text-white text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full">
@@ -68,7 +67,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Logged-in User Dashboard Status */}
       {isLoggedIn && user && (
         <section className="space-y-6">
           <h2 className="text-2xl font-bold text-gray-800 border-b pb-2">
@@ -76,7 +74,6 @@ export default function Home() {
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Account Details Card */}
             <div className="bg-white border border-gray-200 p-6 rounded-xl shadow-sm space-y-3">
               <h3 className="font-bold text-gray-700 text-lg border-b pb-2">
                 Personal Info
@@ -101,7 +98,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Verification Status Card */}
             <div className="bg-white border border-gray-200 p-6 rounded-xl shadow-sm space-y-4">
               <h3 className="font-bold text-gray-700 text-lg border-b pb-2">
                 Verification Status
@@ -142,7 +138,6 @@ export default function Home() {
               )}
             </div>
 
-            {/* Approval Status Card */}
             <div className="bg-white border border-gray-200 p-6 rounded-xl shadow-sm space-y-3">
               <h3 className="font-bold text-gray-700 text-lg border-b pb-2">
                 Waitlist Status

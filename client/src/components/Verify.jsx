@@ -47,7 +47,6 @@ export default function Verify() {
     );
   }
 
-  // Handle Email OTP Send
   const handleSendEmailOtp = async () => {
     const res = await sendEmailOtp(user.email, token);
     if (res.success) {
@@ -58,7 +57,6 @@ export default function Verify() {
     }
   };
 
-  // Handle Email OTP Verify
   const handleVerifyEmailOtp = async (e) => {
     e.preventDefault();
     if (!emailOtp || emailOtp.length !== 5) {
@@ -76,7 +74,6 @@ export default function Verify() {
     }
   };
 
-  // Handle Phone OTP Send
   const handleSendPhoneOtp = async () => {
     const res = await sendPhoneOtp(user.phone, token);
     if (res.success) {
@@ -87,7 +84,6 @@ export default function Verify() {
     }
   };
 
-  // Handle Phone OTP Verify
   const handleVerifyPhoneOtp = async (e) => {
     e.preventDefault();
     if (!phoneOtp || phoneOtp.length !== 5) {
@@ -117,7 +113,6 @@ export default function Verify() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {/* EMAIL VERIFICATION BOX */}
         <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm space-y-6 flex flex-col justify-between">
           <div className="space-y-4">
             <div className="flex items-center justify-between">
@@ -187,7 +182,6 @@ export default function Verify() {
           </div>
         </div>
 
-        {/* PHONE VERIFICATION BOX */}
         <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm space-y-6 flex flex-col justify-between">
           <div className="space-y-4">
             <div className="flex items-center justify-between">

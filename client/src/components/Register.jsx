@@ -65,7 +65,6 @@ export default function Register() {
             </p>
           </div>
 
-          {/* Google OAuth Button */}
           <button
             type="button"
             onClick={handleGoogleSignup}

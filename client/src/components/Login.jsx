@@ -71,7 +71,6 @@ export default function Login() {
           </div>
 
           <div className="space-y-3">
-            {/* Google User Login */}
             <button
               type="button"
               onClick={handleGoogleUserLogin}
@@ -98,7 +97,6 @@ export default function Login() {
               Sign in with Google
             </button>
 
-            {/* Google Admin Login */}
             <button
               type="button"
               onClick={handleGoogleAdminLogin}
