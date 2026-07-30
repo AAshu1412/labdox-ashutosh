@@ -39,3 +39,5 @@ pnpm-debug.log*
 
 # Git (Git ignores its own folder automatically, but added per assignment rules)
 .git/
+package.json
+pnpm-lock.yaml
