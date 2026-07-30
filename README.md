@@ -96,6 +96,9 @@ const sendSms = (phone, message) => {
 git clone git@github.com:AAshu1412/labdox-ashutosh.git
 cd labdox-ashutosh
 
+# Install pnpm globally via npm 
+npm install -g pnpm
+
 # Install Server Dependencies
 cd server
 pnpm install

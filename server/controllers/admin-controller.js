@@ -1,21 +1,16 @@
 const { User } = require("../models/user-model");
 
-// ─────────────────────────────────────────────
-//  Get all users (with search & filters)
-// ─────────────────────────────────────────────
 const getAllUsers = async (req, res) => {
   try {
     const {
-      q,                // Search query (name, email, or phone)
-      emailVerified,    // "true" or "false"
-      phoneVerified,    // "true" or "false"
-      approvalStatus,   // "pending", "approved", "rejected"
+      q,               
+      emailVerified,    
+      phoneVerified,  
+      approvalStatus,  
     } = req.query;
 
-    // Build filter object
-    const filter = { role: { $ne: "admin" } }; // Exclude admin from user list
+    const filter = { role: { $ne: "admin" } }; 
 
-    // Search by name, email, or phone
     if (q) {
       const searchRegex = new RegExp(q, "i");
       filter.$or = [
@@ -25,15 +20,12 @@ const getAllUsers = async (req, res) => {
       ];
     }
 
-    // Filter by email verification status
     if (emailVerified === "true") filter.isEmailVerified = true;
     if (emailVerified === "false") filter.isEmailVerified = false;
 
-    // Filter by phone verification status
     if (phoneVerified === "true") filter.isPhoneVerified = true;
     if (phoneVerified === "false") filter.isPhoneVerified = false;
 
-    // Filter by approval status
     if (approvalStatus && ["pending", "approved", "rejected"].includes(approvalStatus)) {
       filter.approvalStatus = approvalStatus;
     }
